@@ -5,11 +5,23 @@
   <title>Resume of diligent.s.r.p</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
     body {
         width: 100vw;
         height: 100vh;
         display: flex;
         flex-direction: row;
+    }
+    p + p {
+        margin-top: 16px;
     }
   </style>
 </head>
@@ -21,7 +33,7 @@
                 <img src="images/self_image.jpg" alt="self_image" style="height: 130%; width: auto; object-fit: cover">
             </div>
         </div>
-        <div style="margin-left: 18%; margin-right: 18%;">
+        <div style="margin-left: 18%; margin-right: 18%; margin-top: 20%;">
             <p style="text-align: center; font-size: 33px; ">Contacts</p>
             <p>Phone call: 18359865018</p>
             <p>Email: diligent.s.r.p@gmail.com</p>
@@ -30,9 +42,9 @@
         </div>
     </div>
     <div style="width: 72%; height: 100%; margin-left: 4%; margin-right: 4%;">
-        <div id="self_introduce" style="width: 100%;">
+        <div id="self_introduce" style="width: 100%; margin-top: 3%;">
             <p style="font-size: 35px;">Introduction</p>
-            <hr style="flex: 1; border: none; border-top: 1px solid #000000;">
+            <hr style="flex: 1; border: none; border-top: 1px solid #000000; margin-bottom: 16px;">
             <p style="font-size: 20px; ">
                 Welcome to my homepage! I am a current PhD student majoring in Information and Communication Engineering at the University of Science and Technology of China. I completed my undergraduate studies at the School of Information, Xiamen University, majoring in Communication Engineering.
             </p>
@@ -40,17 +52,17 @@
                 Currently, I am focusing on research in embodied intelligence. I have a strong interest in robot manipulation, machine learning, 3D representation, and diffusion models.
             </p>
         </div>
-        <div id="experience" style="width: 100%;">
+        <div id="experience" style="width: 100%; margin-top: 3%;">
             <p style="font-size: 35px; ">Educations</p>
-            <hr style="flex: 1; border: none; border-top: 1px solid #000000;">
+            <hr style="flex: 1; border: none; border-top: 1px solid #000000; margin-bottom: 16px;">
             <ul style="margin-left: 0%; font-size: 20px;">
                 <li>2020.9 - 2024.6, undergraduate student at Xiamen University(XMU)</li>
                 <li>2024.9 - current, Ph.D student at University of Science and Technology of China(USTC)</li>
             </ul>
         </div>
-        <div id="award" style="width: 100%;">
+        <div id="award" style="width: 100%; margin-top: 3%;">
             <p style="font-size: 35px; ">Awards</p>
-            <hr style="flex: 1; border: none; border-top: 1px solid #000000;">
+            <hr style="flex: 1; border: none; border-top: 1px solid #000000; margin-bottom: 16px;">
             <ul style="margin-left: 0%; font-size: 20px;">
                 <li>2021.12 College Outstanding Three Good Students</li>
                 <li>2021.12 National Scholarship</li>
