@@ -1,94 +1,110 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="zh-CN">
 <head>
-  <title>Resume of diligent.s.r.p</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    html, body {
-        height: 100%;
-        overflow: hidden;
-    }
-    body {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: row;
-    }
-    p + p {
-        margin-top: 16px;
-    }
-  </style>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>srp-homepage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.10.1/css/academicons.min.css">
 
+</head>
 <body>
-    <div style="width: 20%; height: 100%; background-color: rgb(171, 205, 234); color: black;">
-        <div id="image_block" style="width: 100%; height: 20%; display: flex; align-items: center; justify-content: center;">
-            <div style="height: 100px; width: 100px; border-radius: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                <img src="images/self_image.jpg" alt="self_image" style="height: 130%; width: auto; object-fit: cover">
-            </div>
-        </div>
-        <div style="margin-left: 18%; margin-right: 18%; margin-top: 20%;">
-            <p style="text-align: center; font-size: 33px; ">Contacts</p>
-            <p>Phone call: 18359865018</p>
-            <p>Email: diligent.s.r.p@gmail.com</p>
-            <p>Github: 1774656602@qq.com</p>
-            <p>Contact Address: Future Science and Technology Building, No. 2 Yiheyuan Road, Haidian District, Beijing, China</p>
-        </div>
-    </div>
-    <div style="width: 72%; height: 100%; margin-left: 4%; margin-right: 4%; display: flex; flex-direction: column;">
-        <div id="contents" style="width: 100%; height: 90%; display: flex; flex-direction: column;">
-            <div id="self_introduce" style="width: 100%; margin-top: 3%;">
-                <p style="font-size: 35px;">Introduction</p>
-                <hr style="flex: 1; border: none; border-top: 1px solid #000000; margin-bottom: 16px;">
-                <p style="font-size: 20px; ">
-                    Welcome to my homepage! I am a current PhD student majoring in Information and Communication Engineering at the University of Science and Technology of China. I completed my undergraduate studies at the School of Information, Xiamen University, majoring in Communication Engineering.
-                </p>
-                <p style="font-size: 20px; ">
-                    Currently, I am focusing on research in embodied intelligence. I have a strong interest in robot manipulation, machine learning, 3D representation, and diffusion models.
-                </p>
-            </div>
-            <div id="experience" style="width: 100%; margin-top: 3%;">
-                <p style="font-size: 35px; ">Educations</p>
-                <hr style="flex: 1; border: none; border-top: 1px solid #000000; margin-bottom: 16px;">
-                <ul style="margin-left: 0%; font-size: 20px;">
-                    <li>2020.9 - 2024.6, undergraduate student at Xiamen University(XMU)</li>
-                    <li>2024.9 - current, Ph.D student at University of Science and Technology of China(USTC)</li>
-                </ul>
-            </div>
-            <div id="award" style="width: 100%; margin-top: 3%;">
-                <p style="font-size: 35px; ">Awards</p>
-                <hr style="flex: 1; border: none; border-top: 1px solid #000000; margin-bottom: 16px;">
-                <ul style="margin-left: 0%; font-size: 20px;">
-                    <li>2021.12 College Outstanding Three Good Students</li>
-                    <li>2021.12 National Scholarship</li>
-                    <li>2021.12 First Prize in the Fujian Division of the Chinese Mathematics Competition</li>
-                    <li>2022.11 First Prize in the Fujian Division of the China Undergraduate Mathematical Contest in Modeling</li>
-                    <li>2022.12 College Outstanding Three Good Students</li>
-                    <li>2022.12 National Scholarship</li>
-                    <li>2023.05 Finalist Award, Interdisciplinary Contest in Modeling (ICM)</li>
-                    <li>2023.12 National Scholarship</li>
-                    <li>2024.06 Outstanding Graduate of the School of Informatics, Xiamen University</li>
-                </ul>
-            </div>
-        </div>
-        <div id="map" style="width: 100%; height: 10%; display: flex; justify-content: center; align-items: center;">
-            <p style="margin-right: 3%; height: 100%; width: 10%; display: flex; align-items: center;">© Rongpeng Su 2025</p>
-            <a style="height: 100%; width: 50%; display: flex; align-items: center;" href="https://mapmyvisitors.com/web/1byln"  title="Visit tracker">
-                <img style="height: 100px; width: 100px; object-fit: contain;" src="https://mapmyvisitors.com/map.png?d=AOP73rgk9TaccJFPtfpgqbrc9Dvej_6D5yubg33W8Cg&cl=ffffff" />
+
+    <div class="sidebar">
+        <img src="images/self_image.jpg" alt="Profile">
+        <h2>Rongpeng Su</h2>
+        <p>USTC</p>
+        <p>Ph.D. loading...</p>
+        <div class="hyper_url">
+            <a href="#">
+                <i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email
+            </a>
+            <a href="https://github.com/Diligent06">
+                <i class="fab fa-fw fa-github"></i> GitHub
+            </a>
+            <a href="https://scholar.google.com/citations?user=rY-Ndl0AAAAJ&hl=en">
+                <i class="fas fa-fw fa-graduation-cap"></i> Google Scholar
             </a>
         </div>
-
+        
     </div>
-    
-    
+
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <a href="#home">Homepage</a>
+        <a href="#about">About me</a>
+        <a href="#news">News</a>
+        <a href="#publications">Publications</a>
+        <a href="#honer">Honors and Awards</a>
+        <a href="#educations">Educations</a>
+        <a href="#talk">Invited Talks</a>
+        <a href="#internships">Internships</a>
+    </div>
+
+
+    <div class="main">
+        <!-- 页面内容 -->
+        <section id="home" style="min-height: 0; height: 0px; margin: 0 0; padding: 0;">
+            <!-- <h1>首页</h1> -->
+        </section>
+
+        <section id="about">
+            <!-- <h1>关于我们</h1> -->
+            <p>
+                I am a Ph.D. student of the class of 2024 at the University of Science and Technology of China (USTC), currently interning at the Beijing General Artificial Intelligence Research Institute. I obtained a Bachelor of Engineering degree from Xiamen University in 2024.
+            </p>
+            <p>
+                My main research focuses on robotic manipulation and vision-language-action embodied intelligence. I welcome peers with similar research interests to connect and exchange ideas.
+            </p>
+        </section>
+
+        <section id="news">
+            <h1>News</h1>
+            <p>To be done.</p>
+        </section>
+
+        <section id="publications">
+            <h1>Publications</h1>
+            <p>To be done.</p>
+        </section>
+
+        <section id="honer">
+            <h1>Honors and Awards</h1>
+            <ul style="margin-left: 0%; line-height: 2;">
+                <li>2021.12 College Outstanding Three Good Students</li>
+                <li>2021.12 National Scholarship</li>
+                <li>2021.12 First Prize in the Fujian Division of the Chinese Mathematics Competition</li>
+                <li>2022.11 First Prize in the Fujian Division of the China Undergraduate Mathematical Contest in Modeling</li>
+                <li>2022.12 College Outstanding Three Good Students</li>
+                <li>2022.12 National Scholarship</li>
+                <li>2023.05 Finalist Award, Interdisciplinary Contest in Modeling (ICM)</li>
+                <li>2023.12 National Scholarship</li>
+                <li>2024.06 Outstanding Graduate of the School of Informatics, Xiamen University</li>
+            </ul>
+        </section>
+
+        <section id="educations">
+            <h1>Educations</h1>
+            <ul style="margin-left: 0%; line-height: 2;">
+                <li>2024.09 - (now), Ph.D. student in the 6th department at the University of Science and Technology of China (USTC), Hefei</li>
+                <li>2020.09 - 2024.06, undergraduate, Xiamen University, Xiamen</li>
+            </ul>
+        </section>
+
+        <section id="talk">
+            <h1>Invited Talks</h1>
+            <p>To be done</p>
+        </section>
+
+        <section id="internships">
+            <h1>Internships</h1>
+            <ul style="margin-left: 0%; line-height: 2;">
+                <li>2024.05 - 2024.09, Intern Researcher, Machine learning department, Beijing General Artificial Intelligence Research Institute (BIGAI), Beijing</li>
+            </ul>
+        </section>
+    </div>
+
+
 </body>
-
-
-
 </html>

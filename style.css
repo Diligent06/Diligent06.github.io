@@ -1,0 +1,113 @@
+/* 导航栏样式 */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    position: fixed;       /* 固定在顶部 */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 10vh;
+    background-color: white;
+    overflow: hidden;
+    z-index: 1000;        /* 保证导航栏在最上层 */
+    border-bottom: 1px solid #ccc;
+
+    display: flex;
+    justify-content: center;   /* 水平居中 */
+    align-items: center;
+}
+.navbar a {
+    float: left;
+    display: block;
+    color: rgb(45, 43, 43);
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: background 0.3s;
+    border-bottom: 3px solid transparent;
+}
+.navbar a:hover {
+    border-bottom: 3px solid rgb(45, 43, 43); /* 粗下划线 */  
+    color: rgb(45, 43, 43);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20vw;
+    height: 100vh;
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    padding-top: 10%;
+    /* border-right: 1px solid #ccc; */
+    display: flex;              /* 开启 flex 布局 */
+    flex-direction: column;     /* 元素竖着排列 */
+    align-items: center;        /* ⭐ 水平居中所有子元素 */
+    text-align: center;         /* 让文字也居中 */
+}
+
+/* 左侧内容 */
+.sidebar img {
+    width: 30%;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+.sidebar h2 {
+    margin: 1vh 0;
+}
+.sidebar p, .sidebar a {
+    margin: 1vh 0;
+    display: block;
+    color: #333;
+    text-decoration: none;
+}
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
+.main {
+    margin-left: 20vw;     /* 左侧栏宽度 */
+    margin-top: 10vh;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.main section {
+    min-height: 15vh;
+    padding-top: 1vh;
+    margin-bottom: 0;
+    scroll-margin-top: 10vh;
+    padding-right: 20%;
+    padding-left: 5%;
+}
+
+.main p {
+    line-height: 2;
+}
+
+.hyper_url {
+    text-align: left;
+    margin-left: 10%;
+    margin: 1vh 0;
+}
+
+.hyper_url a {
+    display: block;
+    margin: 2vh 0;
+}
+
+
+#home { background-color: white; }
+#about { background-color: white; }
+#news { background-color: white; }
+#publications { background-color: white; }
+#honer { background-color: white; }
+#educations { background-color: white; }
+#talk { background-color: white; }
+#internships { background-color: white; }
