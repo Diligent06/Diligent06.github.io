@@ -1,16 +1,30 @@
 # Docker
 
-## Container Lifecycle
+## Download docker
+Follow install instruction under this page to install docker. (https://docs.docker.com/engine/install/)
 
+
+## Start a container
+Follow command below you can pull down ubuntu 20.04 image and you can use docker images to check it. 
+
+Docker run -it command can create a container which can use host gpu, network, can visualize window in host machine and share ~/data folder under host filesystem into /workspace/data under container.
 ```bash
-# Create a new container with a volume mount
+docker pull ubuntu:20.04
 docker run -it \
-  -v /home/diligent/Desktop/BIGAI-EAI-RoboVerse:/home/diligent/RoboVerse_local \
-  --name metasim_local \
-  bigai-eai-roboverse-metasim
+  --name your_container_name
+  --gpus all \
+  --privileged \
+  --network host \
+  --ipc=host \
+  -e DISPLAY=$DISPLAY \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -v ~/data:/workspace/data \
+  --restart unless-stopped \
+  ubuntu:20.04
 
-# Connect as a specific user
-docker exec -u your_user_name <container_name> bash
+docker start container_name # start container
+docker stop container_name # stop container
+docker exec -it container_name /bin/bash # go into container
 ```
 
 ## Shared Memory
@@ -28,38 +42,9 @@ systemctl restart docker
 # Start your container — shared memory is now updated
 ```
 
-## Display (GUI) Inside Docker
-
+## commit a container as an image
 ```bash
-# Fix "cannot open display" error
-export DISPLAY=:1
+docker commit containe_name your_image_name:[tag] # save a container into an docker image
+docker save -o your_image_name.tar your_image_name:[tag]  # save image into a tar file
+docker load -i your_image_name.tar   # load a docker image tar file into docker images
 ```
-
-## Proxy for Container Network
-
-Configure Squid on the **host machine** so containers can use the host's network proxy:
-
-```bash
-# 1. Install Squid on host
-sudo apt install squid
-
-# 2. Edit config
-sudo vi /etc/squid/squid.conf
-# Add these lines:
-acl localnet src 10.1.110.0/23
-http_access allow localnet
-http_port 3128
-
-# 3. Restart Squid
-sudo systemctl restart squid
-sudo systemctl status squid
-```
-
-Then inside the container:
-
-```bash
-export http_proxy=http://<host-ip>:3128
-export https_proxy=http://<host-ip>:3128
-```
-
-> **Tip:** Set the proxy before starting IsaacLab — otherwise startup may hang.
