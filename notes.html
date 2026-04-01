@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes – Rongpeng Su</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.10.1/css/academicons.min.css">
+    <!-- marked.js for markdown rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+    <!-- highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <style>
+        /* ── Notes page layout ── */
+        .notes-container {
+            display: flex;
+            gap: 0;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* Left picker panel */
+        .notes-picker {
+            width: 230px;
+            flex-shrink: 0;
+            border-right: 1px solid #e8e8e8;
+            padding: 24px 0 24px 0;
+            background: #fafafa;
+            position: sticky;
+            top: 60px;           /* below navbar */
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+        }
+
+        .notes-picker h3 {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #999;
+            padding: 0 20px 10px 20px;
+            margin: 0;
+        }
+
+        .notes-picker ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .notes-picker li {
+            margin: 0;
+        }
+
+        .notes-picker li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            font-size: 13.5px;
+            color: #444;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: background 0.15s, border-color 0.15s, color 0.15s;
+            line-height: 1.4;
+        }
+
+        .notes-picker li a:hover {
+            background: #f0f0f0;
+            color: #111;
+        }
+
+        .notes-picker li a.active {
+            border-left-color: #c00;
+            background: #fff5f5;
+            color: #c00;
+            font-weight: 600;
+        }
+
+        .notes-picker li a .pick-icon {
+            font-size: 15px;
+            width: 18px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* Right markdown viewer */
+        .notes-viewer {
+            flex: 1;
+            padding: 36px 48px 60px 48px;
+            min-width: 0;
+            max-width: 860px;
+        }
+
+        /* Empty state */
+        .notes-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 60vh;
+            color: #bbb;
+            gap: 14px;
+        }
+        .notes-empty i { font-size: 40px; }
+        .notes-empty p { font-size: 15px; margin: 0; }
+
+        /* Loading state */
+        .notes-loading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #888;
+            padding: 40px 0;
+            font-size: 14px;
+        }
+        .notes-loading i { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Markdown rendered content ── */
+        .md-body {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #222;
+        }
+
+        .md-body h1 {
+            font-size: 1.7em;
+            font-weight: 700;
+            border-bottom: 2px solid #e8e8e8;
+            padding-bottom: 8px;
+            margin: 0 0 22px 0;
+            color: #111;
+        }
+
+        .md-body h2 {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin: 32px 0 10px 0;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #1a1a1a;
+        }
+
+        .md-body h3 {
+            font-size: 1em;
+            font-weight: 700;
+            margin: 22px 0 8px 0;
+            color: #333;
+        }
+
+        .md-body p {
+            margin: 0 0 12px 0;
+        }
+
+        .md-body ul, .md-body ol {
+            padding-left: 22px;
+            margin: 0 0 14px 0;
+        }
+
+        .md-body li {
+            margin-bottom: 4px;
+        }
+
+        /* Code blocks */
+        .md-body pre {
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 14px 18px;
+            overflow-x: auto;
+            margin: 12px 0 18px 0;
+            position: relative;
+        }
+
+        .md-body pre code {
+            background: none;
+            padding: 0;
+            font-size: 13px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            line-height: 1.6;
+        }
+
+        /* Copy button */
+        .md-body pre .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: #e8e8e8;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 9px;
+            font-size: 11px;
+            cursor: pointer;
+            color: #555;
+            transition: background 0.15s;
+            font-family: inherit;
+        }
+        .md-body pre .copy-btn:hover { background: #d0d0d0; }
+        .md-body pre .copy-btn.copied { background: #c8f0c8; color: #267326; }
+
+        /* Inline code */
+        .md-body code {
+            background: #f0f0f0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.88em;
+            font-family: 'SFMono-Regular', Consolas, monospace;
+        }
+
+        /* Tables */
+        .md-body table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 14px 0 20px 0;
+            font-size: 13.5px;
+        }
+
+        .md-body th {
+            background: #f2f2f2;
+            font-weight: 700;
+            text-align: left;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+        }
+
+        .md-body td {
+            padding: 7px 12px;
+            border: 1px solid #e4e4e4;
+        }
+
+        .md-body tr:nth-child(even) td {
+            background: #fafafa;
+        }
+
+        /* Blockquotes */
+        .md-body blockquote {
+            margin: 14px 0;
+            padding: 10px 16px;
+            border-left: 4px solid #c00;
+            background: #fff8f8;
+            color: #555;
+            font-size: 0.95em;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .md-body blockquote p { margin: 0; }
+
+        /* Horizontal rule */
+        .md-body hr {
+            border: none;
+            border-top: 1px solid #e8e8e8;
+            margin: 28px 0;
+        }
+
+        /* Strong / em */
+        .md-body strong { font-weight: 700; color: #111; }
+        .md-body a { color: #c00; text-decoration: none; }
+        .md-body a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .notes-picker {
+                width: 180px;
+            }
+            .notes-viewer {
+                padding: 24px 20px 48px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Sidebar (same as index.html) ── -->
+    <div class="sidebar">
+        <img src="images/self_image.jpg" alt="Profile">
+        <h2>Rongpeng Su</h2>
+        <p>USTC</p>
+        <p>Ph.D. loading...</p>
+        <div class="hyper_url">
+            <a href="#">
+                <i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email
+            </a>
+            <a href="https://github.com/Diligent06">
+                <i class="fab fa-fw fa-github"></i> GitHub
+            </a>
+            <a href="https://scholar.google.com/citations?user=rY-Ndl0AAAAJ&hl=en">
+                <i class="fas fa-fw fa-graduation-cap"></i> Google Scholar
+            </a>
+        </div>
+    </div>
+
+    <!-- ── Navbar ── -->
+    <div class="navbar">
+        <a href="index.html"><b>Homepage</b></a>
+        <a href="notes.html" class="active">📒 Notes</a>
+    </div>
+
+    <!-- ── Main content ── -->
+    <div class="main">
+        <div class="notes-container">
+
+            <!-- Left: file picker -->
+            <nav class="notes-picker">
+                <h3>📂 Notes</h3>
+                <ul id="picker-list">
+                    <li>
+                        <a href="#" data-file="docs/01_ubuntu_system.md" class="pick-item">
+                            <span class="pick-icon">🐧</span> Ubuntu System
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-file="docs/02_cuda_nvidia.md" class="pick-item">
+                            <span class="pick-icon">⚡</span> CUDA &amp; NVIDIA
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-file="docs/03_docker.md" class="pick-item">
+                            <span class="pick-icon">🐳</span> Docker
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-file="docs/04_ros2.md" class="pick-item">
+                            <span class="pick-icon">🤖</span> ROS 2
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-file="docs/05_robotics_simulation.md" class="pick-item">
+                            <span class="pick-icon">🦾</span> Robotics Simulation
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-file="docs/06_ml_models_ai_api.md" class="pick-item">
+                            <span class="pick-icon">🧠</span> ML Models &amp; AI API
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-file="docs/07_hardware_embedded.md" class="pick-item">
+                            <span class="pick-icon">🔧</span> Hardware &amp; Embedded
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-file="docs/08_cv_3d_libraries.md" class="pick-item">
+                            <span class="pick-icon">👁</span> CV &amp; 3D Libraries
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Right: markdown viewer -->
+            <div class="notes-viewer" id="notes-viewer">
+                <div class="notes-empty" id="empty-state">
+                    <i class="fas fa-book-open"></i>
+                    <p>Select a note from the left to view it.</p>
+                </div>
+                <div id="md-content" class="md-body" style="display:none;"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Configure marked
+        marked.setOptions({
+            breaks: true,
+            gfm: true
+        });
+
+        // Custom renderer to add copy buttons to code blocks
+        const renderer = new marked.Renderer();
+        renderer.code = function(code, lang) {
+            const validLang = lang && hljs.getLanguage(lang) ? lang : 'plaintext';
+            let highlighted;
+            try {
+                highlighted = hljs.highlight(typeof code === 'object' ? code.text : code, { language: validLang }).value;
+            } catch(e) {
+                highlighted = typeof code === 'object' ? code.text : code;
+            }
+            const escapedCode = (typeof code === 'object' ? code.text : code)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return `<pre><button class="copy-btn" onclick="copyCode(this)" data-code="${escapedCode.replace(/"/g,'&quot;')}">Copy</button><code class="hljs language-${validLang}">${highlighted}</code></pre>`;
+        };
+
+        marked.use({ renderer });
+
+        function copyCode(btn) {
+            const text = btn.getAttribute('data-code')
+                .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+            });
+        }
+
+        // Load markdown file and render
+        async function loadNote(filename, linkEl) {
+            // Update active state
+            document.querySelectorAll('.pick-item').forEach(a => a.classList.remove('active'));
+            linkEl.classList.add('active');
+
+            // Show loading
+            const viewer = document.getElementById('notes-viewer');
+            const emptyState = document.getElementById('empty-state');
+            const mdContent = document.getElementById('md-content');
+
+            emptyState.style.display = 'none';
+            mdContent.style.display = 'none';
+            mdContent.innerHTML = `<div class="notes-loading"><i class="fas fa-spinner"></i> Loading…</div>`;
+            mdContent.style.display = 'block';
+
+            try {
+                const response = await fetch(filename);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const text = await response.text();
+                mdContent.innerHTML = marked.parse(text);
+
+                // Scroll to top of viewer
+                viewer.scrollTop = 0;
+
+                // Push to URL hash for bookmarking
+                history.replaceState(null, '', '#' + filename.replace('.md', ''));
+            } catch (err) {
+                mdContent.innerHTML = `<div class="notes-empty" style="height:auto;padding:40px 0;">
+                    <i class="fas fa-exclamation-triangle" style="color:#c00;"></i>
+                    <p>Could not load <code>${filename}</code>.<br>
+                    Make sure this page is served from the same folder as the .md files.</p>
+                </div>`;
+            }
+        }
+
+        // Attach click handlers
+        document.querySelectorAll('.pick-item').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                loadNote(link.dataset.file, link);
+            });
+        });
+
+        // Auto-load from URL hash on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                const match = document.querySelector(`.pick-item[data-file="${hash}.md"]`);
+                if (match) { loadNote(match.dataset.file, match); return; }
+            }
+            // Default: load first note
+            const first = document.querySelector('.pick-item');
+            if (first) loadNote(first.dataset.file, first);
+        });
+    </script>
+
+</body>
+</html>
