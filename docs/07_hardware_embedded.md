@@ -41,12 +41,4 @@ pip install pyrealsense2
 
 ---
 
-## NFS Shared Folders (Xiaojian's Server)
 
-```bash
-sudo mkdir -p /mnt/xiaojian/bigai_ml
-sudo mount -t nfs 10.1.110.37:/srv/nfs/shared/bigai_ml /mnt/xiaojian/bigai_ml
-
-sudo mkdir -p /mnt/xiaojian/nfs_fillipo
-sudo mount -t nfs 10.1.110.37:/srv/nfs/shared/nfs_fillipo /mnt/xiaojian/nfs_fillipo
-```

@@ -1,16 +1,5 @@
 # ML Models & AI APIs
 
-## API Keys
-
-```bash
-# Azure OpenAI
-export AZURE_OPENAI_API_KEY="163eb119c0853717661df499f0fe06c7"
-# export AZURE_OPENAI_API_KEY="76be97e37a3caa0bd1474c48654c6d20"  # expired
-
-# LiteLLM
-# Key: sk-PMcNW-gkgydkI1NvN0OQFw
-```
-
 ---
 
 ## M2T2 Model
