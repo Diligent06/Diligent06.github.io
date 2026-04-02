@@ -13,13 +13,14 @@ docker pull ubuntu:20.04
 docker run -it \
   --name your_container_name
   --gpus all \
-  --privileged \
+  --privileged \ # give almost all rights of host, like /dev/*
   --network host \
-  --ipc=host \
+  --ipc=host \    # inter-process communication, which can use IPC connect with process of host
   -e DISPLAY=$DISPLAY \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v ~/data:/workspace/data \
-  --restart unless-stopped \
+  -v /dev:/dev \  # mount all device into container
+  --restart unless-stopped \   # automatic restart container unless user stop it manually
   ubuntu:20.04
 
 docker start container_name # start container

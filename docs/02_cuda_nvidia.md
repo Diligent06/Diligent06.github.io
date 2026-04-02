@@ -8,20 +8,12 @@ export PATH=/usr/local/cuda-12.1/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64:$LD_LIBRARY_PATH
 
 # Or use the unversioned symlink (points to current CUDA)
+ln -s your_real_cuda_path /usr/local/cuda # create soft link from cuda you actually use to a soft link
 export PATH=/usr/local/cuda/bin:$PATH
 ```
 
-> **Note:** Alternatively, add `/usr/local/cuda-12.1/lib64` to `/etc/ld.so.conf` and run `sudo ldconfig`.
 
-## Switching Between CUDA Versions
-
-```bash
-# Add to ~/.bashrc, replacing "version" with e.g. "12.1", "11.8"
-export PATH=/usr/local/cuda-<version>/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-<version>/lib64:$LD_LIBRARY_PATH
-```
-
-## Install CUDA from Runfile (No Driver Override)
+## Install CUDA from Runfile (If you don't have root permission)
 
 ```bash
 # Download runfile from https://developer.nvidia.com/cuda-downloads
