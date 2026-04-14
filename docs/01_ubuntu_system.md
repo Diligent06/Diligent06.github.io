@@ -62,3 +62,40 @@ Host Host_alias # for example github_ssh
   IdentityFile your_ssh_private_key 
 
 ```
+
+## rsync copy files
+```bash
+sudo apt install rsync
+rsync -av --exclude='file_to_skip' /source/folder/ /target/folder/
+```
+
+## check how many space current directory occupy
+```bash
+du -h --max-depth=1 your_directory_path
+```
+
+## add a ntp service in host machine
+```bash
+sudo apt install chrony
+sudo systemctl enable chrony
+sudo systemctl start chrony
+systemctl status chrony
+chronyc tracking
+
+sudo vi /etc/chrony/chrony.conf
+# add allow 192.168.0.0/24 into file above (you need to change ip subnet)
+sudo systemctl restart chrony
+```
+If you want to use ntp service in python script, you can edit your code like below and you need to pip install ntplib firstly.
+```python
+import ntplib
+client = ntplib.NTPClient()
+response = client.request("192.168.50.208")
+ntp_time = response.tx_time
+```
+
+## connect to a wifi in ubuntu terminal
+```bash
+sudo nmcli dev wifi list
+sudo nmcli device wifi connect "your_wifi_name" password "your_wifi_password"
+```
