@@ -99,3 +99,36 @@ ntp_time = response.tx_time
 sudo nmcli dev wifi list
 sudo nmcli device wifi connect "your_wifi_name" password "your_wifi_password"
 ```
+
+## python package manager tools
+```bash
+# conda
+conda env list
+conda env create -n your_env_name python=your_python_version
+conda env remove -n your_env_name
+
+# uv
+pip install uv # install into your user python interpreter
+
+# pixi
+pixi info # print pixi information
+pixi add your_package_name # install a python package for pixi environment
+
+```
+
+## docker container display setting
+```bash
+docker run -it \
+  --gpus all \
+  -e DISPLAY=$DISPLAY \
+  -v /tmp/.X11-unix:/tmp/.X11-unix
+
+echo $DISPLAY # run this command in host
+echo $DISPLAY # run this command in container and check this number is the same with host
+```
+
+## find history command in terminal
+```bash
+history # print last command line history
+history | grep your_keyword
+```
