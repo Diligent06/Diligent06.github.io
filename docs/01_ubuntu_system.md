@@ -99,6 +99,27 @@ ntp_time = response.tx_time
 sudo nmcli dev wifi list
 sudo nmcli device wifi connect "your_wifi_name" password "your_wifi_password"
 ```
+### maybe some embedding devices like lubancat cannot connect to wifi which uses WPA2/WPA3 mixed encryption
+create a file named wpa_supplicant.conf and put content below into it.
+```bash
+network={
+    ssid="your_wifi_name"
+    psk="your_password"
+
+    key_mgmt=WPA-PSK
+    proto=RSN
+
+    pairwise=CCMP
+    group=CCMP
+
+    ieee80211w=1
+}
+```
+```bash
+sudo wpa_supplicant -B -i wlan0 -c wpa_supplicant.conf
+sudo dhclient wlan0 # enable dhcp of wlan0
+ping baidu.com # test network connectivity
+```
 
 ## python package manager tools
 ```bash

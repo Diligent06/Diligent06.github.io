@@ -49,3 +49,11 @@ docker commit containe_name your_image_name:[tag] # save a container into an doc
 docker save -o your_image_name.tar your_image_name:[tag]  # save image into a tar file
 docker load -i your_image_name.tar   # load a docker image tar file into docker images
 ```
+
+## visualization on host machine
+```bash
+# in host machine terminal
+xhost +local:docker
+# in docker container terminal
+xclock # test visualization normal or not
+```
