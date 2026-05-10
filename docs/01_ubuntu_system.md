@@ -120,6 +120,18 @@ sudo wpa_supplicant -B -i wlan0 -c wpa_supplicant.conf
 sudo dhclient wlan0 # enable dhcp of wlan0
 ping baidu.com # test network connectivity
 ```
+### maybe method above still cannot connect to WPA2/WPA3 mixed wifi, you can follow guidance below to test again
+```bash
+sudo nmcli connect add \
+  type wifi \
+  ifname wlan0 \
+  con-name your_wifi_name \
+  ssid your_wifi_name
+
+sudo nmcli connection modify Delta wifi-sec.key-mgmt wpa-psk
+sudo nmcli connection modify Delta wifi-sec.psk "your_wifi_password"
+sudo nmcli connection up Delta
+```
 
 ## python package manager tools
 ```bash
