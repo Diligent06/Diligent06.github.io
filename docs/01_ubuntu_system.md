@@ -165,3 +165,34 @@ echo $DISPLAY # run this command in container and check this number is the same 
 history # print last command line history
 history | grep your_keyword
 ```
+
+## scan a subnetwork in linux
+```bash
+sudo apt install nmap
+nmap -sn 192.168.50.0/24 # your subnetwork address
+```
+
+## start a script when linux system startup
+```bash
+# Firstly, you need to create a sh script for automatic start your process. For example, startup_sdcard.sh
+sudo vi /etc/systemd/system/sdcard.service and write script below into it.
+[Unit]
+Description=SDcard Startup Service
+After=multi-user.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/bin/bash /root/startup/startup_sdcard.sh
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl doemon-reload
+sudo systemctl enable sdcard.service
+sudo systemctl start sdcard.service
+sudo systemctl stop sdcard.service
+sudo systemctl status sdcard.service
+```
