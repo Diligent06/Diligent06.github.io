@@ -181,7 +181,7 @@ Description=SDcard Startup Service
 After=multi-user.target
 
 [Service]
-Type=simple
+Type=simple # if you want only start it once, you can change this to oneshot
 User=root
 ExecStart=/bin/bash /root/startup/startup_sdcard.sh
 Restart=always
@@ -190,7 +190,7 @@ RestartSec=3
 [Install]
 WantedBy=multi-user.target
 
-sudo systemctl doemon-reload
+sudo systemctl daemon-reload
 sudo systemctl enable sdcard.service
 sudo systemctl start sdcard.service
 sudo systemctl stop sdcard.service
